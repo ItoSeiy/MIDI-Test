@@ -1,0 +1,6 @@
+    #ROOTNAMESPACEBEGIN#
+[System.Serializable]
+public struct #SCRIPTNAME#
+{
+}
+#ROOTNAMESPACEEND#
