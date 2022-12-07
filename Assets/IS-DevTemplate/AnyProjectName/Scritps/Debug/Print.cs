@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class Print : MonoBehaviour
 {
+    [SerializeField]
+    private string _message;
+
     public void Do()
     {
-        print("Printed");
+        print(_message);
     }
 }
