@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ISDevTemplate;
 
-public class NotesGenerator : MonoBehaviour
+public class NotesJudgement : SingletonMonoBehaviour<NotesJudgement>
 {
-    public void GenerateNotes()
-    {
 
-    }
 }
