@@ -10,20 +10,20 @@ namespace ISDevTemplate.Data
     [Serializable]
     public struct RangeValueStruct<T> where T : struct
     {
-        public T Min => _min;
+        public T Start => _start;
 
-        public T Max => _max;
-
-        [SerializeField]
-        private T _min;
+        public T End => _end;
 
         [SerializeField]
-        private T _max;
+        private T _start;
 
-        public RangeValueStruct(T min, T max)
+        [SerializeField]
+        private T _end;
+
+        public RangeValueStruct(T start, T end)
         {
-            _min = min;
-            _max = max;
+            _start = start;
+            _end = end;
         }
     }
 
@@ -34,20 +34,20 @@ namespace ISDevTemplate.Data
     [Serializable]
     public class RangeValueClass<T> where T : class
     {
-        public T Min => _min;
+        public T Start => _start;
 
-        public T Max => _max;
-
-        [SerializeField]
-        private T _min;
+        public T End => _end;
 
         [SerializeField]
-        private T _max;
+        private T _start;
 
-        public RangeValueClass(T min, T max)
+        [SerializeField]
+        private T _end;
+
+        public RangeValueClass(T start, T end)
         {
-            _min = min;
-            _max = max;
+            _start = start;
+            _end = end;
         }
     }
 }
