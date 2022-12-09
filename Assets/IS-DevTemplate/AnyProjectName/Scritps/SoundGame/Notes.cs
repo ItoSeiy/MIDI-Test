@@ -6,14 +6,9 @@ public class Notes
 {
     private JudgeType _currentGudge;
 
-    private RangeValueStruct<float> _goodGudgeRange;
-
-    private RangeValueStruct<float> _perfectGudgeRange;
-
     public Notes(RangeValueStruct<float> goodGudgeRange, RangeValueStruct<float> perfectGudgeRange)
     {
-        _goodGudgeRange = goodGudgeRange;
-        _perfectGudgeRange = perfectGudgeRange;
+        JudgeSequence(goodGudgeRange, perfectGudgeRange);
     }
 
     public void Input()
@@ -21,10 +16,23 @@ public class Notes
 
     }
 
-    private async void JudgeSequence()
+    private async void JudgeSequence(RangeValueStruct<float> goodGudgeRange, RangeValueStruct<float> perfectGudgeRange)
     {
+        // この関数が呼ばれる時点ではGoodRangeが始まっているので goodGudgeRange.Start を待たない
+
         _currentGudge = JudgeType.Good;
-        await UniTask.Delay(TimeSpan.FromSeconds(_perfectGudgeRange.Start));
+
+        await UniTask.Delay(TimeSpan.FromSeconds(perfectGudgeRange.Start));
+
+        _currentGudge = JudgeType.Perfect;
+
+        await UniTask.Delay(TimeSpan.FromSeconds(perfectGudgeRange.End));
+
+        _currentGudge = JudgeType.Good;
+
+        await UniTask.Delay(TimeSpan.FromSeconds(goodGudgeRange.End));
+
+        _currentGudge = JudgeType.Miss;
     }
 }
 
