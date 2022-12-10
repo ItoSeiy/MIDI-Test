@@ -11,12 +11,11 @@ public class NotesGenerator : MonoBehaviour
     [SerializeField]
     private RangeValueStruct<float> _perfectGudgeRange;
 
-    private List<Notes> _generatedNotes = new List<Notes>();
-
-    private Notes _currentNotes;
+    [SerializeField]
+    NotesInput _notesInput;
 
     public void Generate()
     {
-        _generatedNotes.Add(new Notes(_goodGudgeRange, _perfectGudgeRange));
+        _notesInput.ChangeCurrentNotes(new Notes(_goodGudgeRange, _perfectGudgeRange));
     }
 }
