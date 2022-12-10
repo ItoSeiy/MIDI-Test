@@ -14,10 +14,10 @@ public class Notes
 
     private bool _isJudged = false;
 
-    public Notes(RangeValueStruct<double> goodGudgeRange, RangeValueStruct<double> perfectGudgeRange)
+    public Notes(double beforeGoodGudgeEndTime, double perfectGudgeEndTime, double afterGoodGudgeEndTime)
     {
         _cts = new CancellationTokenSource();
-        JudgeSequence(goodGudgeRange, perfectGudgeRange);
+        JudgeSequence(beforeGoodGudgeEndTime, perfectGudgeEndTime, afterGoodGudgeEndTime);
     }
 
     public void Input()
@@ -33,14 +33,13 @@ public class Notes
         Debug.Log($"ノーツが入力された:{_currentGudge}");
     }
 
-    private async void JudgeSequence(RangeValueStruct<double> goodGudgeRange, RangeValueStruct<double> perfectGudgeRange)
+    private async void JudgeSequence(double beforeGoodGudgeEndTime, double perfectGudgeEndTime, double afterGoodGudgeEndTime)
     {
-        // この関数が呼ばれる時点ではGoodRangeが始まっているので goodGudgeRange.Start を待たない
         _currentGudge = JudgeType.Good;
 
         try 
         { 
-            await UniTask.Delay(TimeSpan.FromSeconds(perfectGudgeRange.Start), cancellationToken: _cts.Token); 
+            await UniTask.Delay(TimeSpan.FromSeconds(beforeGoodGudgeEndTime), cancellationToken: _cts.Token); 
         }
         catch (OperationCanceledException) { return; }
 
@@ -48,7 +47,7 @@ public class Notes
 
         try
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(perfectGudgeRange.End), cancellationToken: _cts.Token);
+            await UniTask.Delay(TimeSpan.FromSeconds(perfectGudgeEndTime), cancellationToken: _cts.Token);
         }
         catch (OperationCanceledException) { return; }
 
@@ -56,7 +55,7 @@ public class Notes
 
         try
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(goodGudgeRange.End), cancellationToken: _cts.Token);
+            await UniTask.Delay(TimeSpan.FromSeconds(afterGoodGudgeEndTime), cancellationToken: _cts.Token);
         }
         catch (OperationCanceledException) { return; }
 

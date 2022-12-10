@@ -5528,12 +5528,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22e86d16be076ac4e98888c064290569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _goodGudgeRange:
-    _start: 0.2
-    _end: 1.2
-  _perfectGudgeRange:
-    _start: 0.05
-    _end: 1.05
+  _beforeGoodGudgeEndTime: 0.1
+  _perfectGudgeEndTime: 0.4
+  _afterGoodGudgeEndTime: 0.1
   _notesInput: {fileID: 1460603382}
 --- !u!1 &1895969656
 GameObject:

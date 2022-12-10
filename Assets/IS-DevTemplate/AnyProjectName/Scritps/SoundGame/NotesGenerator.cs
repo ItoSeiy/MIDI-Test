@@ -7,16 +7,19 @@ using UnityEngine;
 public class NotesGenerator : MonoBehaviour
 {
     [SerializeField]
-    private RangeValueStruct<double> _goodGudgeRange = new RangeValueStruct<double>(0.1, 1.1);
+    private double _beforeGoodGudgeEndTime = 0.1;
 
     [SerializeField]
-    private RangeValueStruct<double> _perfectGudgeRange = new RangeValueStruct<double>(0.05, 1.05);
+    private double _perfectGudgeEndTime = 0.05;
+
+    [SerializeField]
+    private double _afterGoodGudgeEndTime = 0.1;
 
     [SerializeField]
     NotesInput _notesInput;
 
     public void Generate()
     {
-        _notesInput.ChangeCurrentNotes(new Notes(_goodGudgeRange, _perfectGudgeRange));
+        _notesInput.ChangeCurrentNotes(new Notes(_beforeGoodGudgeEndTime, _perfectGudgeEndTime, _afterGoodGudgeEndTime));
     }
 }
