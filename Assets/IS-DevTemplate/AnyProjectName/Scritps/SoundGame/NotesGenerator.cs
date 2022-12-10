@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using ISDevTemplate.Data;
@@ -6,10 +7,10 @@ using UnityEngine;
 public class NotesGenerator : MonoBehaviour
 {
     [SerializeField]
-    private RangeValueStruct<float> _goodGudgeRange;
+    private RangeValueStruct<double> _goodGudgeRange = new RangeValueStruct<double>(0.1, 1.1);
 
     [SerializeField]
-    private RangeValueStruct<float> _perfectGudgeRange;
+    private RangeValueStruct<double> _perfectGudgeRange = new RangeValueStruct<double>(0.05, 1.05);
 
     [SerializeField]
     NotesInput _notesInput;

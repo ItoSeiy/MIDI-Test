@@ -6,13 +6,15 @@ using UnityEngine;
 
 public class Notes
 {
+    public JudgeType CurrentGudge => _currentGudge;
+
     private JudgeType _currentGudge;
 
     private CancellationTokenSource _cts;
 
-    private bool _isMissed = false;
+    private bool _isJudged = false;
 
-    public Notes(RangeValueStruct<float> goodGudgeRange, RangeValueStruct<float> perfectGudgeRange)
+    public Notes(RangeValueStruct<double> goodGudgeRange, RangeValueStruct<double> perfectGudgeRange)
     {
         _cts = new CancellationTokenSource();
         JudgeSequence(goodGudgeRange, perfectGudgeRange);
@@ -20,34 +22,47 @@ public class Notes
 
     public void Input()
     {
-        if (_isMissed)
+        if (_isJudged)
         {
             Debug.Log("すでにミスしているノーツが入力された");
             return;
         }
 
         _cts.Cancel();
-        Debug.Log(_currentGudge);
+        NotesGudge.Instance.Gudge(_currentGudge);
+        Debug.Log($"ノーツが入力された:{_currentGudge}");
     }
 
-    private async void JudgeSequence(RangeValueStruct<float> goodGudgeRange, RangeValueStruct<float> perfectGudgeRange)
+    private async void JudgeSequence(RangeValueStruct<double> goodGudgeRange, RangeValueStruct<double> perfectGudgeRange)
     {
         // この関数が呼ばれる時点ではGoodRangeが始まっているので goodGudgeRange.Start を待たない
-
         _currentGudge = JudgeType.Good;
 
-        await UniTask.Delay(TimeSpan.FromSeconds(perfectGudgeRange.Start), cancellationToken: _cts.Token);
+        try 
+        { 
+            await UniTask.Delay(TimeSpan.FromSeconds(perfectGudgeRange.Start), cancellationToken: _cts.Token); 
+        }
+        catch (OperationCanceledException) { return; }
 
         _currentGudge = JudgeType.Perfect;
 
-        await UniTask.Delay(TimeSpan.FromSeconds(perfectGudgeRange.End), cancellationToken: _cts.Token);
+        try
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(perfectGudgeRange.End), cancellationToken: _cts.Token);
+        }
+        catch (OperationCanceledException) { return; }
 
         _currentGudge = JudgeType.Good;
 
-        await UniTask.Delay(TimeSpan.FromSeconds(goodGudgeRange.End), cancellationToken: _cts.Token);
+        try
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(goodGudgeRange.End), cancellationToken: _cts.Token);
+        }
+        catch (OperationCanceledException) { return; }
 
-        _isMissed = true;
+        _isJudged = true;
         _currentGudge = JudgeType.Miss;
+        NotesGudge.Instance.Gudge(_currentGudge);
         Debug.Log("ノーツが見逃された");
     }
 }
