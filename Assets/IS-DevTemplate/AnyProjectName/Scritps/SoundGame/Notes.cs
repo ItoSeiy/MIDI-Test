@@ -30,7 +30,6 @@ public class Notes
 
         _cts.Cancel();
         NotesGudge.Instance.Gudge(_currentGudge);
-        Debug.Log($"ノーツが入力された:{_currentGudge}");
     }
 
     private async void JudgeSequence(double beforeGoodGudgeEndTime, double perfectGudgeEndTime, double afterGoodGudgeEndTime)
